@@ -1,25 +1,28 @@
 
 // create grid-containers document(element) reference
 
-document.addEventListener("DOMContentLoaded", function() {
-    const gridContainer = document.querySelector(".grid-container");
-  
-    function createGrid(rows, cols) {
-      gridContainer.style.setProperty("--grid-rows", rows);
-      gridContainer.style.setProperty("--grid-cols", cols);
-  
-      for (let i = 0; i < rows * cols; i++) {
-        const cell = document.createElement("div");
-        cell.addEventListener("mouseover", () => {
-            cell.style.backgroundColor = "blue";
-        });
+const cdiv = document.querySelector('.container');
+
+// Add 16 divs
+for (let i = 1; i < 257; i++) {
+  const div = document.createElement('div');
+  cdiv.appendChild(div);
+}
 
 
-        gridContainer.appendChild(cell).className = "grid-item"; 
+let isMouseDown = false; 
 
-      }
+
+cdiv.addEventListener('mousedown', () => {
+  isMouseDown = true; 
+}); 
+cdiv.addEventListener('mouseover', (a) => {
+    if (isMouseDown && a.target !== cdiv) { 
+      a.target.style.backgroundColor = 'black';
     }
-  
-    createGrid(16, 16); 
-  });
 
+    if (a.target == cdiv || !cdiv.contains(a.relatedTarget)) { 
+      console.log("outside") 
+      isMouseDown = false; 
+    }
+}); 
